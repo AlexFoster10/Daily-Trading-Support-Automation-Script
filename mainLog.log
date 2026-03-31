@@ -1,12 +1,12 @@
-Tue, 31 Mar 2026 19:39:43 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
-Tue, 31 Mar 2026 19:39:43 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
-Tue, 31 Mar 2026 19:39:45 INFO     pnl file found
-Tue, 31 Mar 2026 19:39:45 INFO     positions file found
-Tue, 31 Mar 2026 19:39:45 INFO     trades file found
-Tue, 31 Mar 2026 19:39:45 INFO     pnl file has arrived on time
-Tue, 31 Mar 2026 19:39:45 INFO     positions file has arrived on time
-Tue, 31 Mar 2026 19:39:45 INFO     trades file has arrived on time
-Tue, 31 Mar 2026 19:39:45 INFO     PNL file validation successful
-Tue, 31 Mar 2026 19:39:45 INFO     Positions file validation successful
-Tue, 31 Mar 2026 19:39:45 INFO     Trades file validation successful
-Tue, 31 Mar 2026 19:39:45 INFO     RESULT: Yesterday's Trades: 5///Today's Trades: 5
+Tue, 31 Mar 2026 21:17:28 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 21:17:28 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 21:17:30 INFO     pnl file found
+Tue, 31 Mar 2026 21:17:30 INFO     positions file found
+Tue, 31 Mar 2026 21:17:30 INFO     trades file found
+Tue, 31 Mar 2026 21:17:30 INFO     pnl file has arrived on time
+Tue, 31 Mar 2026 21:17:30 INFO     positions file has arrived on time
+Tue, 31 Mar 2026 21:17:30 INFO     trades file has arrived on time
+Tue, 31 Mar 2026 21:17:30 INFO     PNL file validation successful
+Tue, 31 Mar 2026 21:17:30 INFO     Positions file validation successful
+Tue, 31 Mar 2026 21:17:30 INFO     Trades file validation successful
+Tue, 31 Mar 2026 21:17:30 INFO     RESULT: Yesterday's Trades: 5///Today's Trades: 5
