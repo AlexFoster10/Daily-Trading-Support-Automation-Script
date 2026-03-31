@@ -165,6 +165,7 @@ def validate_trades(file_path):
         df.loc[:, 'quantity'] = pd.to_numeric(df['quantity'], errors='coerce')
         df.loc[:, 'price'] = pd.to_numeric(df['price'], errors='coerce')
         df.dropna(inplace=True)
+        df = df[df['quantity'] % 1 == 0]
         #logger.info("Dropped all non numeric rows")
     except Exception as e:
         logger.error(f"Error converting numeric columns to numeric: {e}")

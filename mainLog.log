@@ -1,13 +1,12 @@
-Tue, 31 Mar 2026 17:04:01 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
-Tue, 31 Mar 2026 17:04:01 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
-Tue, 31 Mar 2026 17:04:01 INFO     pnl file validation successful
-Tue, 31 Mar 2026 17:04:01 INFO     positions file validation successful
-Tue, 31 Mar 2026 17:04:01 INFO     Dropped rows due to invalid data:
+Tue, 31 Mar 2026 17:11:40 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 17:11:40 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 17:11:40 INFO     pnl file validation successful
+Tue, 31 Mar 2026 17:11:40 INFO     positions file validation successful
+Tue, 31 Mar 2026 17:11:40 INFO     Dropped rows due to invalid data:
 Empty DataFrame
 Columns: [symbol, quantity, avg_price, market_price, unrealized_pnl, currency]
 Index: []
-Tue, 31 Mar 2026 17:04:01 INFO     trades file validation successful
-Tue, 31 Mar 2026 17:04:01 INFO     Dropped rows due to invalid data:
-Empty DataFrame
-Columns: [trade_id, timestamp, symbol, side, quantity, price, currency]
-Index: []
+Tue, 31 Mar 2026 17:11:40 INFO     trades file validation successful
+Tue, 31 Mar 2026 17:11:40 INFO     Dropped rows due to invalid data:
+  trade_id                 timestamp symbol  side  quantity  price currency
+1     T002 2026-03-31 09:05:42+00:00   TSLA  SELL       5.1  265.1      USD
