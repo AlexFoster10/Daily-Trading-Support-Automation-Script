@@ -1,8 +1,13 @@
-Tue, 31 Mar 2026 16:20:55 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
-Tue, 31 Mar 2026 16:20:55 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
-Tue, 31 Mar 2026 16:20:55 INFO     pnl file validation successful
-Tue, 31 Mar 2026 16:20:55 INFO     Dropped all non numeric rows
-Tue, 31 Mar 2026 16:20:55 INFO     positions file validation successful
-Tue, 31 Mar 2026 16:20:55 INFO     Dropped rows due to invalid data:
-  symbol  quantity  avg_price  market_price  unrealized_pnl currency
-1   TSLA        20      250.0         265.1           302.0     USdD
+Tue, 31 Mar 2026 17:04:01 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 17:04:01 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 17:04:01 INFO     pnl file validation successful
+Tue, 31 Mar 2026 17:04:01 INFO     positions file validation successful
+Tue, 31 Mar 2026 17:04:01 INFO     Dropped rows due to invalid data:
+Empty DataFrame
+Columns: [symbol, quantity, avg_price, market_price, unrealized_pnl, currency]
+Index: []
+Tue, 31 Mar 2026 17:04:01 INFO     trades file validation successful
+Tue, 31 Mar 2026 17:04:01 INFO     Dropped rows due to invalid data:
+Empty DataFrame
+Columns: [trade_id, timestamp, symbol, side, quantity, price, currency]
+Index: []

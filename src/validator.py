@@ -79,7 +79,7 @@ def validate_positions(file_path):
 
         if symbol.any():
             df = df[~symbol]
-            logger.info("Dropped rows with whitespace in symbol column")
+            #logger.info("Dropped rows with whitespace in symbol column")
     except Exception as e:
         logger.error(f"Error validating symbol column: {e}")
         return False
@@ -90,7 +90,7 @@ def validate_positions(file_path):
         df.loc[:, 'market_price'] = pd.to_numeric(df['market_price'], errors='coerce')
         df.loc[:, 'unrealized_pnl'] = pd.to_numeric(df['unrealized_pnl'], errors='coerce')
         df.dropna(inplace=True)
-        logger.info("Dropped all non numeric rows")
+        #logger.info("Dropped all non numeric rows")
     except Exception as e:
         logger.error(f"Error converting numeric columns to numeric: {e}")
         return False
@@ -105,6 +105,81 @@ def validate_positions(file_path):
 
 
     logger.info("positions file validation successful")
+    dropped_rows = df_copy[~df_copy.index.isin(df.index)]
+    logger.info(f"Dropped rows due to invalid data:\n{dropped_rows}")
+    return True
+
+def validate_trades(file_path):
+    try:
+        df = pd.read_csv(file_path)
+        df_copy = df
+        required_columns = ['trade_id','timestamp','symbol','side','quantity','price','currency']
+        for col in required_columns:
+            if col not in df.columns:
+                logger.error(f"Missing column: {col}")
+                return False
+    except Exception as e:
+        logger.error(f"Error validating trades file: {e}")
+        return False
+    df.dropna(inplace=True)
+
+    try:
+        if not df['trade_id'].is_unique:
+            logger.error("Duplicate trade_id values found")
+            return False
+    except Exception as e:
+        logger.error(f"Error validating trade_id column: {e}")
+        return False
+
+    try:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce', utc=True)
+        invalid_timestamps = df['timestamp'].isnull()
+        if invalid_timestamps.any():
+            df = df.loc[~invalid_timestamps].copy()
+    except Exception as e:
+        logger.error(f"Error converting timestamp column to datetime: {e}")
+        return False
+
+    try:
+        symbol = df['symbol'].astype(str)
+
+        symbol = symbol.str.contains(r"\s")
+
+        if symbol.any():
+            df = df[~symbol]
+            #logger.info("Dropped rows with whitespace in symbol column")
+    except Exception as e:
+        logger.error(f"Error validating symbol column: {e}")
+        return False
+
+    try:
+        side = df['side'].astype(str).str.lower()
+        valid_sides = ['buy', 'sell']
+        side_mask = side.isin(valid_sides)
+        df = df.loc[side_mask].copy()
+    except Exception as e:
+        logger.error(f"Error validating side column: {e}")
+        return False
+
+    try:
+        df.loc[:, 'quantity'] = pd.to_numeric(df['quantity'], errors='coerce')
+        df.loc[:, 'price'] = pd.to_numeric(df['price'], errors='coerce')
+        df.dropna(inplace=True)
+        #logger.info("Dropped all non numeric rows")
+    except Exception as e:
+        logger.error(f"Error converting numeric columns to numeric: {e}")
+        return False
+    
+    try:
+        valid_mask = df['currency'].apply(is_valid_currency)
+        df = df.loc[valid_mask].copy()
+                    
+    except Exception as e:
+        logger.error(f"Error validating currency codes: {e}")
+        return False
+
+
+    logger.info("trades file validation successful")
     dropped_rows = df_copy[~df_copy.index.isin(df.index)]
     logger.info(f"Dropped rows due to invalid data:\n{dropped_rows}")
     return True
