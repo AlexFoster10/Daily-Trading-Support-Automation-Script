@@ -19,7 +19,7 @@ def validate_pnl(file_path):
         required_columns = ['date','realized_pnl','unrealized_pnl','total_pnl','currency']
         for col in required_columns:
             if col not in df.columns:
-                logger.error(f"Missing column: {col}")
+                logger.error(f"PNL file: missing column: {col}")
                 return False
     except Exception as e:
         logger.error(f"Error validating pnl file: {e}")
@@ -28,10 +28,10 @@ def validate_pnl(file_path):
     try:
         df['date'] = pd.to_datetime(df['date'], errors='coerce')
         if df['date'].isnull().any():
-            logger.error("Invalid date format found in date column")
-            return False
+            logger.error("PNL file: Invalid date format found in date column")
+            return False 
     except Exception as e:
-        logger.error(f"Error converting date column to datetime: {e}")
+        logger.error(f"PNL file: Error converting date column to datetime: {e}")
         return False
 
     try:
@@ -39,23 +39,23 @@ def validate_pnl(file_path):
         df.loc[:, 'unrealized_pnl'] = pd.to_numeric(df['unrealized_pnl'], errors='coerce')
         df.loc[:, 'total_pnl'] = pd.to_numeric(df['total_pnl'], errors='coerce')
         if df[['realized_pnl', 'unrealized_pnl', 'total_pnl']].isnull().any().any():
-            logger.error("Non-numeric values found in pnl columns")
+            logger.error("PNL file: Non-numeric values found in pnl columns")
             return False
     except Exception as e:
-        logger.error(f"Error converting pnl columns to numeric: {e}")
+        logger.error(f"PNL file: Error converting pnl columns to numeric: {e}")
         return False
     
     try:
         if not df['currency'].apply(is_valid_currency).all():
-            logger.error("Invalid currency codes found in currency column")
+            logger.error("PNL file: Invalid currency codes found in currency column")
             return False
     except Exception as e:
-        logger.error(f"Error validating currency codes: {e}")
+        logger.error(f"PNL file: Error validating currency codes: {e}")
         return False
     
 
 
-    logger.info("pnl file validation successful")
+    logger.info("PNL file validation successful")
     return df
 
 def validate_positions(file_path):
@@ -65,10 +65,10 @@ def validate_positions(file_path):
         required_columns = ['symbol','quantity','avg_price','market_price','unrealized_pnl','currency']
         for col in required_columns:
             if col not in df.columns:
-                logger.error(f"Missing column: {col}")
+                logger.error(f"Positions file: missing column: {col}")
                 return False
     except Exception as e:
-        logger.error(f"Error validating positions file: {e}")
+        logger.error(f"Positions file: Error validating positions file: {e}")
         return False
     df.dropna(inplace=True)
 
@@ -79,9 +79,9 @@ def validate_positions(file_path):
 
         if symbol.any():
             df = df[~symbol]
-            #logger.info("Dropped rows with whitespace in symbol column")
+            logger.info("Positions file: Dropped rows with whitespace in symbol column")
     except Exception as e:
-        logger.error(f"Error validating symbol column: {e}")
+        logger.error(f"Positions file: Error validating symbol column: {e}")
         return False
 
     try:
@@ -89,24 +89,29 @@ def validate_positions(file_path):
         df.loc[:, 'avg_price'] = pd.to_numeric(df['avg_price'], errors='coerce')
         df.loc[:, 'market_price'] = pd.to_numeric(df['market_price'], errors='coerce')
         df.loc[:, 'unrealized_pnl'] = pd.to_numeric(df['unrealized_pnl'], errors='coerce')
-        df.dropna(inplace=True)
-        #logger.info("Dropped all non numeric rows")
+        if df.isnull().values.any():
+            df.dropna(inplace=True)
+            logger.info("Positions file: Dropped all non numeric rows")
     except Exception as e:
-        logger.error(f"Error converting numeric columns to numeric: {e}")
+        logger.error(f"Positions file: Error converting numeric columns to numeric: {e}")
         return False
     
     try:
         valid_mask = df['currency'].apply(is_valid_currency)
+        invalid_rows = df.loc[~valid_mask]
+        if not invalid_rows.empty:
+            logger.warning("Positions file: Dropped rows with invalid currency values")
         df = df.loc[valid_mask].copy()
                     
     except Exception as e:
-        logger.error(f"Error validating currency codes: {e}")
+        logger.error(f"Positions file: Error validating currency codes: {e}")
         return False
 
 
-    logger.info("positions file validation successful")
+    logger.info("Positions file validation successful")
     dropped_rows = df_copy[~df_copy.index.isin(df.index)]
-    logger.info(f"Dropped rows due to invalid data:\n{dropped_rows}")
+    if not dropped_rows.empty:
+        logger.info(f"Positions file: Dropped rows due to invalid data:\n{dropped_rows}")
     return df
 
 def validate_trades(file_path):
@@ -116,28 +121,29 @@ def validate_trades(file_path):
         required_columns = ['trade_id','timestamp','symbol','side','quantity','price','currency']
         for col in required_columns:
             if col not in df.columns:
-                logger.error(f"Missing column: {col}")
+                logger.error(f"Trades file: missing column: {col}")
                 return False
     except Exception as e:
-        logger.error(f"Error validating trades file: {e}")
+        logger.error(f"Trades file: Error validating trades file: {e}")
         return False
     df.dropna(inplace=True)
 
     try:
         if not df['trade_id'].is_unique:
-            logger.error("Duplicate trade_id values found")
+            logger.error("Trades file: Duplicate trade_id values found")
             return False
     except Exception as e:
-        logger.error(f"Error validating trade_id column: {e}")
+        logger.error(f"Trades file: Error validating trade_id column: {e}")
         return False
 
     try:
         df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce', utc=True)
         invalid_timestamps = df['timestamp'].isnull()
         if invalid_timestamps.any():
+            logger.info("Trades file: Dropped rows with invalid timestamps")
             df = df.loc[~invalid_timestamps].copy()
     except Exception as e:
-        logger.error(f"Error converting timestamp column to datetime: {e}")
+        logger.error(f"Trades file: Error converting timestamp column to datetime: {e}")
         return False
 
     try:
@@ -147,18 +153,21 @@ def validate_trades(file_path):
 
         if symbol.any():
             df = df[~symbol]
-            #logger.info("Dropped rows with whitespace in symbol column")
+            logger.info("Trades file: Dropped rows with whitespace in symbol column")
     except Exception as e:
-        logger.error(f"Error validating symbol column: {e}")
+        logger.error(f"Trades file: Error validating symbol column: {e}")
         return False
 
     try:
         side = df['side'].astype(str).str.lower()
         valid_sides = ['buy', 'sell']
         side_mask = side.isin(valid_sides)
+        invalid_rows = df.loc[~side_mask]
+        if not invalid_rows.empty:
+            logger.warning("Trades file: Dropped rows with invalid side values")
         df = df.loc[side_mask].copy()
     except Exception as e:
-        logger.error(f"Error validating side column: {e}")
+        logger.error(f"Trades file: Error validating side column: {e}")
         return False
 
     try:
@@ -168,19 +177,23 @@ def validate_trades(file_path):
         df = df[df['quantity'] % 1 == 0]
         #logger.info("Dropped all non numeric rows")
     except Exception as e:
-        logger.error(f"Error converting numeric columns to numeric: {e}")
+        logger.error(f"Trades file: Error converting numeric columns to numeric: {e}")
         return False
     
     try:
         valid_mask = df['currency'].apply(is_valid_currency)
+        invalid_rows = df.loc[~valid_mask]
+        if not invalid_rows.empty:
+            logger.warning("Trades file: Dropped rows with invalid currency values")
         df = df.loc[valid_mask].copy()
                     
     except Exception as e:
-        logger.error(f"Error validating currency codes: {e}")
+        logger.error(f"Trades file: Error validating currency codes: {e}")
         return False
 
 
-    logger.info("trades file validation successful")
+    logger.info("Trades file validation successful")
     dropped_rows = df_copy[~df_copy.index.isin(df.index)]
-    logger.info(f"Dropped rows due to invalid data:\n{dropped_rows}")
+    if not dropped_rows.empty:
+        logger.info(f"Trades file: Dropped rows due to invalid data:\n{dropped_rows}")
     return df
