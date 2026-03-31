@@ -56,7 +56,7 @@ def validate_pnl(file_path):
 
 
     logger.info("pnl file validation successful")
-    return True
+    return df
 
 def validate_positions(file_path):
     try:
@@ -107,7 +107,7 @@ def validate_positions(file_path):
     logger.info("positions file validation successful")
     dropped_rows = df_copy[~df_copy.index.isin(df.index)]
     logger.info(f"Dropped rows due to invalid data:\n{dropped_rows}")
-    return True
+    return df
 
 def validate_trades(file_path):
     try:
@@ -182,4 +182,4 @@ def validate_trades(file_path):
     logger.info("trades file validation successful")
     dropped_rows = df_copy[~df_copy.index.isin(df.index)]
     logger.info(f"Dropped rows due to invalid data:\n{dropped_rows}")
-    return True
+    return df
