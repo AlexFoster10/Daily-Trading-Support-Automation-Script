@@ -1,10 +1,12 @@
 import os.path
 import os
 import logging
+import time
+import datetime
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', filename='mainLog.log', filemode='w')
 
-
+cuttoff_time = datetime.datetime.now().replace(hour=15, minute=4, second=0, microsecond=0)
 
 def check_files_exist(parent_path):
 
@@ -14,11 +16,11 @@ def check_files_exist(parent_path):
 
     for x in os.listdir(parent_path):
         file_path = os.path.join(parent_path, x)
-        if os.path.isfile(file_path) and x.startswith("pnl_") and (".csv" in file_path):
+        if os.path.isfile(file_path) and x == f"pnl_{datetime.datetime.now().strftime('%Y%m%d')}.csv":
             pnl = True
-        elif os.path.isfile(file_path) and x.startswith("positions_") and (".csv" in file_path):
+        elif os.path.isfile(file_path) and x == f"positions_{datetime.datetime.now().strftime('%Y%m%d')}.csv":
             positions = True
-        elif os.path.isfile(file_path) and x.startswith("trades_") and (".csv" in file_path):
+        elif os.path.isfile(file_path) and x == f"trades_{datetime.datetime.now().strftime('%Y%m%d')}.csv":
             trades = True
 
     if not pnl:
@@ -34,5 +36,17 @@ def check_files_exist(parent_path):
         "trades": trades
     }
 
-    return var
+    all_files_exist = pnl and positions and trades
+
+
+    return var, all_files_exist
+
+def arrival_loop(parent_path):
+    while True:
+        print("Checking for file arrival...")
+        now = datetime.datetime.now()
+        if now >= cuttoff_time:
+            exists, all_present = check_files_exist(parent_path)
+            return exists, all_present
+        time.sleep(10)
 
