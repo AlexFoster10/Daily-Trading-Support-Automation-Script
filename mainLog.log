@@ -1,0 +1,3 @@
+Tue, 31 Mar 2026 15:43:29 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 15:43:29 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
+Tue, 31 Mar 2026 15:43:29 INFO     pnl file validation successful

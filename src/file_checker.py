@@ -6,7 +6,7 @@ import datetime
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', filename='mainLog.log', filemode='w')
 
-cuttoff_time = datetime.datetime.now().replace(hour=15, minute=4, second=0, microsecond=0)
+cuttoff_time = datetime.datetime.now().replace(hour=15, minute=10, second=0, microsecond=0)
 
 def check_files_exist(parent_path):
 
