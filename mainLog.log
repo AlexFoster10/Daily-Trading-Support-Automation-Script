@@ -1,13 +1,21 @@
-Wed, 01 Apr 2026 16:09:36 DEBUG    Currency 'leone' already taken in index 'name' and will be ignored. This is an error in the databases.
-Wed, 01 Apr 2026 16:09:36 DEBUG    Currency 'bolívar soberano' already taken in index 'name' and will be ignored. This is an error in the databases.
-Wed, 01 Apr 2026 16:09:38 INFO     pnl file found
-Wed, 01 Apr 2026 16:09:38 INFO     positions file found
-Wed, 01 Apr 2026 16:09:38 INFO     trades file found
-Wed, 01 Apr 2026 16:09:38 INFO     pnl file has arrived on time
-Wed, 01 Apr 2026 16:09:38 INFO     positions file has arrived on time
-Wed, 01 Apr 2026 16:09:38 INFO     trades file has arrived on time
-Wed, 01 Apr 2026 16:09:38 INFO     PNL file validation successful
-Wed, 01 Apr 2026 16:09:38 INFO     Positions file validation successful
-Wed, 01 Apr 2026 16:09:38 INFO     Trades file validation successful
-Wed, 01 Apr 2026 16:09:38 INFO     RESULT: Yesterday's Trades: 5///Today's Trades: 5
-Wed, 01 Apr 2026 16:09:38 INFO     RESULT: Total Notional Value: 114875.84999999999
+Wed, 01 Apr 2026 17:15:50 WARNING  pnl file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  positions file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  trades file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  pnl file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  positions file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  trades file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  pnl file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  positions file is missing
+Wed, 01 Apr 2026 17:15:50 WARNING  trades file is missing
+Wed, 01 Apr 2026 17:15:50 INFO     pnl file found
+Wed, 01 Apr 2026 17:15:50 INFO     positions file found
+Wed, 01 Apr 2026 17:15:50 INFO     trades file found
+Wed, 01 Apr 2026 17:15:50 INFO     pnl file has arrived on time
+Wed, 01 Apr 2026 17:15:50 INFO     positions file has arrived on time
+Wed, 01 Apr 2026 17:15:50 INFO     trades file has arrived on time
+Wed, 01 Apr 2026 17:15:50 INFO     pnl file found
+Wed, 01 Apr 2026 17:15:50 INFO     positions file found
+Wed, 01 Apr 2026 17:15:50 INFO     trades file found
+Wed, 01 Apr 2026 17:15:50 INFO     pnl file found
+Wed, 01 Apr 2026 17:15:50 INFO     positions file found
+Wed, 01 Apr 2026 17:15:50 INFO     trades file found
