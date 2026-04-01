@@ -1,4 +1,5 @@
-import logging
+
+import datetime
 
 def generate_report(txt = ""):
     msg = txt
@@ -14,6 +15,6 @@ def generate_report(txt = ""):
             if any(phrase in line for phrase in keep_phrases):
                 important.append(line)
     msg = msg.join(important)
-    with open("report.txt", "w") as f:
+    with open(f"reports/report_{datetime.datetime.now().strftime('%Y%m%d')}.txt", "w") as f:
         f.write(msg)
     return msg

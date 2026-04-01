@@ -19,5 +19,11 @@ def yesterday_trade_comparison(trades_file, trade_df : pd.DataFrame):
         return False
 def notional_comparision():
     pass
-def record_count_comparison():
-    pass
+def record_count_comparison(trade_df : pd.DataFrame):
+    try:
+        temp = trade_df.copy()
+        temp['notional'] = temp['quantity'] * temp['price']
+        logger.info(f"RESULT: Total Notional Value: {temp['notional'].sum()}")
+    except Exception as e:
+        logger.error(f"ERROR calculating notional value: {e}")
+        return False

@@ -14,6 +14,8 @@ def main():
         pd3 = src.validator.validate_trades(f"{parent_path}/trades_{datetime.datetime.now().strftime('%Y%m%d')}.csv")
         if pd3 is not False:
             src.reconciliation.yesterday_trade_comparison(f"previous_records/trades_{(datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')}.csv", pd3)
+            src.reconciliation.record_count_comparison(pd3)
+        
         report = src.reporter.generate_report()
         print(report)
         
